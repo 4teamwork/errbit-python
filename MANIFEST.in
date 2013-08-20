@@ -1,0 +1,5 @@
+recursive-include errbit *
+recursive-include docs *
+include *.rst
+global-exclude *.pyc
+global-exclude ._*
