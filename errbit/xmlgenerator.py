@@ -64,6 +64,9 @@ def add_xml_server_environment(xml, environment):
     if environment.get('app-version', None):
         getattr(xml, 'app-version')(environment.get('app-version'))
 
+    if environment.get('project-root', None):
+        getattr(xml, 'project-root')(environment.get('project-root'))
+
 
 def add_xml_dict_vars(xml, data):
     for key, value in data.items():
