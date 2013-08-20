@@ -60,6 +60,12 @@ Use the errbit client to post exceptions to an errbit installation:
         client.post(exc_info, request=request)
 
 
+Plone
+-----
+
+Plone integration is automatically done with a logging handler,
+nothing needs to be done for enabling it beside configuring the environment variables.
+
 
 Development / tests
 ===================
