@@ -18,12 +18,9 @@ Configure errbit with environment variables:
 
 - ``ERRBIT_URL`` - the post-url to your errbit installation.
 - ``ERRBIT_API_KEY`` - your errbit API key.
-- ``ERRBIT_NOTIFIER_PACKAGE`` - the setuptools-name of your package. This by
-  default be used as notifier name and the setuptools version of this package
-  is used as notifier version.
-- ``ERRBIT_NOTIFIER_NAME`` - sets the notifier name. Overrides ``ERRBIT_NOTIFIER_PACKAGE``.
-- ``ERRBIT_NOTIFIER_VERSION`` - sets the notifier version. Overrides ``ERRBIT_NOTIFIER_PACKAGE``.
-- ``ERRBIT_NOTIFIER_URL`` - sets the default notifier url.
+- ``ERRBIT_PACKAGE`` - the setuptools name of your package.
+- ``ERRBIT_ENVIRONMENT`` - the name of the environment you are running, such as
+  ``staging`` or ``production``.
 
 
 Usage
@@ -60,12 +57,7 @@ Use the errbit client to post exceptions to an errbit installation:
             'cgi-data': {
                 'HTTP_X_FORWARDED_HOST': 'my.app'}}
 
-        environment = {
-            'environment-name': 'production',
-            'app-version': '1.7',
-            'project-root': '/app'}
-
-        client.post(exc_info, request=request, environment=enviroment)
+        client.post(exc_info, request=request)
 
 
 

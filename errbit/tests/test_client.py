@@ -26,40 +26,6 @@ class TestClient(MockerTestCase):
         client = Client()
         self.assertEquals('abcd1234', client.get_api_key())
 
-    def test_notifier_defaults(self):
-        client = Client()
-
-        self.assertEquals(
-            {'name': 'errbit',
-             'version': ERRBIT_VERSION,
-             'url': ''},
-
-            client.get_notifier())
-
-    def test_setting_notifier_info_with_environment_variables(self):
-        os.environ['ERRBIT_NOTIFIER_NAME'] = 'my app'
-        os.environ['ERRBIT_NOTIFIER_VERSION'] = '1.7'
-        os.environ['ERRBIT_NOTIFIER_URL'] = 'http://my.app/'
-
-        client = Client()
-        self.assertEquals(
-            {'name': 'my app',
-             'version': '1.7',
-             'url': 'http://my.app/'},
-
-            client.get_notifier())
-
-    def test_getting_notifier_info_from_package(self):
-        os.environ['ERRBIT_NOTIFIER_PACKAGE'] = 'requests'
-
-        client = Client()
-        self.assertEquals(
-            {'name': 'requests',
-             'version': REQUESTS_VERSION,
-             'url': ''},
-
-            client.get_notifier())
-
     def test_configure_errbit_url_with_environment_variable(self):
         os.environ['ERRBIT_URL'] = 'http://errbit.local/api'
 
@@ -70,7 +36,7 @@ class TestClient(MockerTestCase):
         os.environ['ERRBIT_API_KEY'] = 'abcd1234'
         os.environ['ERRBIT_URL'] = 'http://errbit.local/api'
         request_data = {'url': 'http://foo/bar'}
-        env_data = {'environment-name': 'production'}
+        env_data = {'project-root': os.getcwd()}
         client = Client()
 
         xmlgenerator = self.mocker.replace('errbit.xmlgenerator.generate_xml')
@@ -84,4 +50,4 @@ class TestClient(MockerTestCase):
         self.expect(req.start())
 
         self.mocker.replay()
-        client.post(EXC_INFO, request=request_data, environment=env_data)
+        client.post(EXC_INFO, request=request_data)
