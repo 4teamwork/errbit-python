@@ -6,6 +6,8 @@ version = '1.0.0dev0'
 
 
 tests_require = [
+    'unittest2',
+    'pyquery',
     ]
 
 
@@ -33,6 +35,7 @@ setup(name='errbit',
 
       install_requires=[
         'setuptools',
+        'xmlbuilder',
         ],
 
       tests_require=tests_require,
