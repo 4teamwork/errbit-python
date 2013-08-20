@@ -26,10 +26,11 @@ class ErrbitLoggingHandler(logging.Handler):
             return None
 
         cgidata = dict(request.environ)
-        cgidata['other'] = request.other
+        for key, value in request.other.items():
+            cgidata['other.%s' % key] = value
 
         return {
             'url': request.getURL(),
             'params': request.form,
             'session': request.cookies,
-            'cgi-data': dict(request.environ)}
+            'cgi-data': cgidata}
