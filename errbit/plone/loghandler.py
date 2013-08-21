@@ -8,6 +8,7 @@ class ErrbitLoggingHandler(logging.Handler):
 
     def __init__(self):
         super(ErrbitLoggingHandler, self).__init__()
+        self.setLevel(logging.ERROR)
         self._last_exception = None
 
     def emit(self, record):
