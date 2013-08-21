@@ -6,10 +6,22 @@ import sys
 
 class ErrbitLoggingHandler(logging.Handler):
 
+    def __init__(self):
+        super(ErrbitLoggingHandler, self).__init__()
+        self._last_exception = None
+
     def emit(self, record):
         exc_info = sys.exc_info()
         if exc_info[0] is None:
             return
+
+        # This is a logging handler, not an exception handler.
+        # By storing the last consumed exception we can make the handler
+        # only report on new exceptions.
+        if self._last_exception == exc_info:
+            return
+        else:
+            self._last_exception = exc_info
 
         try:
             self.notify_errbit(exc_info)
