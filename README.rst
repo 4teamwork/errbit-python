@@ -1,3 +1,4 @@
+
 ===================
  errbit for python
 ===================
@@ -80,3 +81,7 @@ Install the package and run the tests using buildout:
     python2.7 bootstrap.py
     bin/buildout
     bin/test
+
+.. image:: https://cruel-carlota.pagodabox.com/2b54f90882a606963f8e0581193f51bb
+   :alt: githalytics.com
+   :target: http://githalytics.com/4teamwork/errbit-python
