@@ -82,6 +82,23 @@ Install the package and run the tests using buildout:
     bin/buildout
     bin/test
 
+
+Links
+-----
+
+- Main github project repository: https://github.com/4teamwork/errbit-python
+- Issue tracker: https://github.com/4teamwork/errbit-python/issues
+- Package on pypi: http://pypi.python.org/pypi/errbit-python
+- Continuous integration: https://jenkins.4teamwork.ch/search?q=errbit-python
+
+
+Copyright
+---------
+
+This package is copyright by `4teamwork <http://www.4teamwork.ch/>`_.
+
+``errbit-python`` is licensed under GNU General Public License, version 2.
+
 .. image:: https://cruel-carlota.pagodabox.com/2b54f90882a606963f8e0581193f51bb
    :alt: githalytics.com
    :target: http://githalytics.com/4teamwork/errbit-python
