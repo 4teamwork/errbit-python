@@ -5,7 +5,9 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Refactor HTTP posting and add ERRBIT_HTTP_CLIENT environment variable for
+  choosing a different implementation.
+  [jone]
 
 
 1.0.0 (2013-08-27)

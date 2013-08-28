@@ -1,3 +1,4 @@
+from errbit import httpclients
 from errbit.client import Client
 from mocker import MockerTestCase
 import os
@@ -14,9 +15,28 @@ except:
     EXC_INFO = sys.exc_info()
 
 
+class MockHTTPClient(object):
+
+    def __init__(self):
+        self.posted = []
+
+    def __call__(self):
+        return self
+
+    def post(self, url, encoded_post_data):
+        self.posted.append({'url': url,
+                            'data': encoded_post_data})
+
+
 class TestClient(MockerTestCase):
 
+    def setUp(self):
+        self.http_client = MockHTTPClient()
+        httpclients.HTTP_CLIENTS['mock'] = self.http_client
+        os.environ['ERRBIT_HTTP_CLIENT'] = 'mock'
+
     def tearDown(self):
+        del httpclients.HTTP_CLIENTS['mock']
         for key in filter(lambda key: key.startswith('ERRBIT_'),
                           os.environ.keys()):
             del os.environ[key]
@@ -44,10 +64,8 @@ class TestClient(MockerTestCase):
                                  EXC_INFO, request=request_data, environment=env_data)
                     ).result('<XMLDATA/>')
 
-        req_class = self.mocker.replace('errbit.request.ThreadedRequest')
-        req = self.mocker.mock()
-        self.expect(req_class('http://errbit.local/api', '<XMLDATA/>')).result(req)
-        self.expect(req.start())
-
         self.mocker.replay()
         client.post(EXC_INFO, request=request_data)
+
+        self.assertEquals([{'data': '<XMLDATA/>', 'url': 'http://errbit.local/api'}],
+                          self.http_client.posted)

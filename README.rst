@@ -22,6 +22,9 @@ Configure errbit with environment variables:
 - ``ERRBIT_PACKAGE`` - the setuptools name of your package.
 - ``ERRBIT_ENVIRONMENT`` - the name of the environment you are running, such as
   ``staging`` or ``production``.
+- ``ERRBIT_HTTP_CLIENT`` - Switch the http client implementation. Switching the
+  implementation can solve different problems when communicating from private
+  networks with HTTP proxies. Current implementations are: ``requests``.
 
 
 Usage

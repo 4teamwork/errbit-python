@@ -1,46 +1,48 @@
 from StringIO import StringIO
 from errbit.request import ThreadedRequest
-from mocker import ARGS
-from mocker import KWARGS
-from mocker import MockerTestCase
-from requests.exceptions import HTTPError
-import logging
+from errbit.tests.utils import NothingRaised
+from unittest2 import TestCase
 
 
-class TestThreadedRequest(MockerTestCase):
+class MockHTTPClient(object):
 
-    def setUp(self):
-        self.requests = self.mocker.replace('requests')
-        self.expect(self.requests.post(ARGS, KWARGS)).count(0)
+    def __init__(self):
+        self.posted = []
 
-        self.log = StringIO()
-        self.handler = logging.StreamHandler(self.log)
-        logging.root.addHandler(self.handler)
+    def post(self, url, encoded_post_data):
+        self.posted.append({'url': url,
+                            'data': encoded_post_data})
 
-    def tearDown(self):
-        logging.root.removeHandler(self.handler)
+
+class ErrorMockHTTPClient(object):
+
+    def post(self, url, encoded_post_data):
+        raise Exception('HTTP Error')
+
+
+class TestThreadedRequest(TestCase):
 
     def test_request_is_sent(self):
-        self.expect_request('http://foo/bar', '<data></data>')
-        self.mocker.replay()
+        http_client = MockHTTPClient()
 
-        req = ThreadedRequest('http://foo/bar', '<data></data>')
+        req = ThreadedRequest('http://foo/bar', '<data></data>',
+                              http_client=http_client)
         req.run()  # synced call
 
-    def test_exceptions_are_catched_and_logged(self):
-        self.expect_request('http://foo', 'data', throws=500)
-        self.mocker.replay()
+        self.assertEquals([{'url': 'http://foo/bar',
+                            'data': '<data></data>'}],
+                          http_client.posted)
 
-        ThreadedRequest('http://foo', 'data').run()
-        self.assertIn('http error 500', self.read_log())
+    def test_exceptions_are_catched_and_printed(self):
+        http_client = ErrorMockHTTPClient()
+        log = StringIO()
+        req = ThreadedRequest('http://foo/bar',
+                              '<data></data>',
+                              http_client=http_client,
+                              log=log)
 
-    def expect_request(self, url, data, throws=None):
-        response = self.mocker.mock()
-        self.expect(self.requests.post(url, data=data)).result(response)
-        self.expect(response.raise_for_status())
-        if throws:
-            self.mocker.throw(HTTPError('http error %s' % throws))
+        with NothingRaised():
+            req.run()  # synced call
 
-    def read_log(self):
-        self.log.seek(0)
-        return self.log.read().strip().split('\n')
+        self.assertEquals('ERROR: Failed to post to errbit: Exception: HTTP Error',
+                          log.getvalue())

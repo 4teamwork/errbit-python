@@ -1,3 +1,4 @@
+from errbit import httpclients
 from errbit import xmlgenerator
 from errbit.request import ThreadedRequest
 import logging
@@ -26,8 +27,18 @@ class Client(object):
                                         exc_info, request=request,
                                         environment=self.get_environment())
 
-        req = ThreadedRequest(self.get_errbit_url(), xml)
+        http_client = self.http_client()
+        req = ThreadedRequest(self.get_errbit_url(), xml, http_client=http_client)
         req.start()
+
+    def http_client(self):
+        client_name = os.environ.get('ERRBIT_HTTP_CLIENT', 'requests')
+        if client_name not in httpclients.HTTP_CLIENTS:
+            raise Exception(('ERRBIT_HTTP_CLIENT: "%s" is no valid client name. '
+                             'Valid clients are: %s') % (
+                    client_name, str(httpclients.HTTP_CLIENTS.keys())))
+
+        return httpclients.HTTP_CLIENTS.get(client_name)()
 
     def get_api_key(self):
         return os.environ.get('ERRBIT_API_KEY')
