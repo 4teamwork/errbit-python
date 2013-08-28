@@ -16,4 +16,4 @@ class ThreadedRequest(threading.Thread):
             self.http_client.post(self.url, self.data)
         except Exception, exc:
             self.log.write('ERROR: Failed to post to errbit: %s: %s' % (
-                    exc.__class__.__name__, exc.message))
+                    exc.__class__.__name__, str(exc)))
