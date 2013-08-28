@@ -24,7 +24,8 @@ Configure errbit with environment variables:
   ``staging`` or ``production``.
 - ``ERRBIT_HTTP_CLIENT`` - Switch the http client implementation. Switching the
   implementation can solve different problems when communicating from private
-  networks with HTTP proxies. Current implementations are: ``requests``, ``urllib``.
+  networks with HTTP proxies. Current implementations are: ``requests``, ``urllib``,
+  ``urllib2``.
 
 
 Usage

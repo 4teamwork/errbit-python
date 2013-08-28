@@ -1,5 +1,6 @@
 import requests
 import urllib
+import urllib2
 
 
 HTTP_CLIENTS = {}
@@ -25,3 +26,13 @@ class UrllibHTTPClient(object):
 
 
 HTTP_CLIENTS['urllib'] = UrllibHTTPClient
+
+
+class Urllib2HTTPClient(object):
+
+    def post(self, url, encoded_post_data):
+        request = urllib2.Request(url=url, data=encoded_post_data)
+        urllib2.urlopen(request)
+
+
+HTTP_CLIENTS['urllib2'] = Urllib2HTTPClient
