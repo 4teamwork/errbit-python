@@ -5,6 +5,9 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
+- Implement urllib HTTP client.
+  [jone]
+
 - Refactor HTTP posting and add ERRBIT_HTTP_CLIENT environment variable for
   choosing a different implementation.
   [jone]
