@@ -5,7 +5,8 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Plone: add errbit-make-error for testing the connection.
+  [jone]
 
 
 1.1.0 (2013-08-28)

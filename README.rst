@@ -71,6 +71,8 @@ Plone
 Plone integration is automatically done with a logging handler,
 nothing needs to be done for enabling it beside configuring the environment variables.
 
+For testing the connection you can call the view ``errbit-make-error`` as ``Manager``.
+
 
 Development / tests
 ===================
