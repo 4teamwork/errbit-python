@@ -1,34 +1,8 @@
 from errbit.client import Client
+from errbit.plone.cleanup import cleanup_request_info
 from zope.component.hooks import getSite
 import logging
-import re
 import sys
-
-
-REPLACEMENT = '**removed by errbit-python**'
-FORMDATA_FILTERS = [r'.*pass.*']
-SESSIONDATA_FILTERS = [r'^__ac']
-
-
-def match_any(expressions, text):
-    for expr in expressions:
-        if re.match(expr, text):
-            return True
-    return False
-
-
-def filter_values(data, key_expressions):
-    if not data:
-        return data
-
-    new_data = {}
-    for key, value in data.items():
-        if match_any(key_expressions, key):
-            new_data[key] = REPLACEMENT
-        else:
-            new_data[key] = value
-
-    return new_data
 
 
 class ErrbitLoggingHandler(logging.Handler):
@@ -58,7 +32,9 @@ class ErrbitLoggingHandler(logging.Handler):
 
     def notify_errbit(self, exc_info):
         client = Client()
-        client.post(exc_info, request=self.get_request_info())
+        request_info = self.get_request_info()
+        request_info = cleanup_request_info(request_info)
+        client.post(exc_info, request=request_info)
 
     def get_request_info(self):
         request = getattr(getSite(), 'REQUEST', None)
@@ -74,8 +50,8 @@ class ErrbitLoggingHandler(logging.Handler):
 
         return {
             'url': request.getURL(),
-            'params': filter_values(request.form, FORMDATA_FILTERS),
-            'session': filter_values(request.cookies, SESSIONDATA_FILTERS),
+            'params': request.form,
+            'session': request.cookies,
             'cgi-data': cgidata,
             'component': component,
             'action': action}

@@ -6,9 +6,10 @@ version = '1.1.2.dev0'
 
 
 tests_require = [
-    'unittest2',
     'mocker',
     'pyquery',
+    'unittest2',
+    'zope.component',
     ]
 
 
