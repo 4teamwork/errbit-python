@@ -59,8 +59,30 @@ class ErrbitLoggingHandler(logging.Handler):
         for key, value in request.other.items():
             cgidata['other.%s' % key] = value
 
+        component = self.get_component(request)
+        action = self.get_action(request)
+
         return {
             'url': request.getURL(),
             'params': remove_passwords_from_formdata(request.form),
             'session': request.cookies,
-            'cgi-data': cgidata}
+            'cgi-data': cgidata,
+            'component': component,
+            'action': action}
+
+    def get_component(self, request):
+        # We use the portal_type of the current context as component,
+        # with a fallback to its class name.
+        if not getattr(request, 'PARENTS', None):
+            return ''
+
+        obj = request.PARENTS[0]
+        return getattr(obj, 'portal_type', obj.__class__.__name__)
+
+    def get_action(self, request):
+        # We use the name of the view as action.
+        view = getattr(request, 'PUBLISHED', None)
+        if not view:
+            return
+
+        return getattr(view, '__name__', view.__class__.__name__)

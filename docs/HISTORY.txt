@@ -5,6 +5,9 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
+- Plone: send component and action too.
+  [jone]
+
 - Plone: remove keys containing "pass" from request data
   We should not send the users password on registration / login failures.
   [jone]
