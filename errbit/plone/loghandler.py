@@ -1,24 +1,34 @@
 from errbit.client import Client
 from zope.component.hooks import getSite
 import logging
+import re
 import sys
 
 
-PASSWORD_REPLACEMENT = '**removed by errbit-python**'
+REPLACEMENT = '**removed by errbit-python**'
+FORMDATA_FILTERS = [r'.*pass.*']
+SESSIONDATA_FILTERS = [r'^__ac']
 
 
-def remove_passwords_from_formdata(formdata):
-    if not formdata:
-        return {}
+def match_any(expressions, text):
+    for expr in expressions:
+        if re.match(expr, text):
+            return True
+    return False
 
-    def replace_item(item):
-        key, value = item
-        if 'pass' in key:
-            return (key, PASSWORD_REPLACEMENT)
+
+def filter_values(data, key_expressions):
+    if not data:
+        return data
+
+    new_data = {}
+    for key, value in data.items():
+        if match_any(key_expressions, key):
+            new_data[key] = REPLACEMENT
         else:
-            return (key, value)
+            new_data[key] = value
 
-    return dict(map(replace_item, formdata.items()))
+    return new_data
 
 
 class ErrbitLoggingHandler(logging.Handler):
@@ -64,8 +74,8 @@ class ErrbitLoggingHandler(logging.Handler):
 
         return {
             'url': request.getURL(),
-            'params': remove_passwords_from_formdata(request.form),
-            'session': request.cookies,
+            'params': filter_values(request.form, FORMDATA_FILTERS),
+            'session': filter_values(request.cookies, SESSIONDATA_FILTERS),
             'cgi-data': cgidata,
             'component': component,
             'action': action}
