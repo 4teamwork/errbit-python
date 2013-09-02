@@ -4,6 +4,23 @@ import logging
 import sys
 
 
+PASSWORD_REPLACEMENT = '**removed by errbit-python**'
+
+
+def remove_passwords_from_formdata(formdata):
+    if not formdata:
+        return {}
+
+    def replace_item(item):
+        key, value = item
+        if 'pass' in key:
+            return (key, PASSWORD_REPLACEMENT)
+        else:
+            return (key, value)
+
+    return dict(map(replace_item, formdata.items()))
+
+
 class ErrbitLoggingHandler(logging.Handler):
 
     def __init__(self):
@@ -44,6 +61,6 @@ class ErrbitLoggingHandler(logging.Handler):
 
         return {
             'url': request.getURL(),
-            'params': request.form,
+            'params': remove_passwords_from_formdata(request.form),
             'session': request.cookies,
             'cgi-data': cgidata}

@@ -5,6 +5,10 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
+- Plone: remove keys containing "pass" from request data
+  We should not send the users password on registration / login failures.
+  [jone]
+
 - Plone: add errbit-make-error for testing the connection.
   [jone]
 
