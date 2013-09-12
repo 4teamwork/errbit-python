@@ -8,7 +8,7 @@ import sys
 class ErrbitLoggingHandler(logging.Handler):
 
     def __init__(self):
-        super(ErrbitLoggingHandler, self).__init__()
+        logging.Handler.__init__(self)
         self.setLevel(logging.ERROR)
         self._last_exception = None
 
