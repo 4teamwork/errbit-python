@@ -79,8 +79,8 @@ class Client(object):
         try:
             cfg = json.load(open(cfg_path, 'r'))
             return cfg['exception_msg']
-        except:
-            raise ErrbitInvalidConfigFileException()
+        except Exception, exc:
+            raise ErrbitInvalidConfigFileException(': '.join((exc.__class__.__name__, str(exc))))
 
     def get_environment(self):
         data = {'project-root': os.getcwd()}
