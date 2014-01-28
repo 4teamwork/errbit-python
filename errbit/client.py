@@ -4,6 +4,7 @@ from errbit.request import ThreadedRequest
 import logging
 import os
 import pkg_resources
+import traceback
 
 
 LOG = logging.getLogger('errbit')
@@ -21,6 +22,9 @@ class Client(object):
 
         if not self.get_api_key():
             logging.error('ERRBIT_API_KEY not configured as environment variable.')
+
+        
+        exc_message = traceback.format_exception_only(exc_info[0], exc_info[1])[-1].strip('\n')
 
         xml = xmlgenerator.generate_xml(self.get_api_key(),
                                         self.get_notifier(),
