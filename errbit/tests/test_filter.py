@@ -3,7 +3,7 @@ from unittest2 import TestCase
 import os
 
 
-class FilterTests(TestCase):
+class SimpleFilterTests(TestCase):
 
     def tearDown(self):
         for key in filter(lambda key: key.startswith('ERRBIT_'),
@@ -20,8 +20,7 @@ class FilterTests(TestCase):
         cfg_path = os.path.join(os.path.dirname(__file__), 'assets', 'errbit_ignore.json')
         os.environ['ERRBIT_IGNORE'] = cfg_path
         client = Client()
-        
+
         self.assertEquals(
-            ["regex", "regex2"],
-            client.get_ignore_regex()
-        )
+            ["^AttributeError\\b", "regex2"],
+            client.get_ignore_regex())

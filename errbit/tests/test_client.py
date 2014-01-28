@@ -69,3 +69,16 @@ class TestClient(MockerTestCase):
 
         self.assertEquals([{'data': '<XMLDATA/>', 'url': 'http://errbit.local/api'}],
                           self.http_client.posted)
+
+    def test_client_filters_test_exception(self):
+        cfg_path = os.path.join(os.path.dirname(__file__), 'assets', 'errbit_ignore.json')
+        os.environ['ERRBIT_IGNORE'] = cfg_path
+        os.environ['ERRBIT_API_KEY'] = 'abcd1234'
+        os.environ['ERRBIT_URL'] = 'http://errbit.local/api'
+
+        client = Client()
+        client.post(EXC_INFO, request={'url': 'http://foo/bar'})
+
+        self.assertEquals(
+            [],
+            self.http_client.posted)

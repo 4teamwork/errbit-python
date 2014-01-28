@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import pkg_resources
+import re
 import traceback
 
 
@@ -24,8 +25,13 @@ class Client(object):
         if not self.get_api_key():
             logging.error('ERRBIT_API_KEY not configured as environment variable.')
 
-        
+
         exc_message = traceback.format_exception_only(exc_info[0], exc_info[1])[-1].strip('\n')
+
+        ignore_pattern = [re.compile(pat) for pat in self.get_ignore_regex()]
+        for pat in ignore_pattern:
+            if pat.match(exc_message):
+                return
 
         xml = xmlgenerator.generate_xml(self.get_api_key(),
                                         self.get_notifier(),

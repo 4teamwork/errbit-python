@@ -37,7 +37,7 @@ The thrown exception will be ignored and not passed to errbit if its message mat
 
     {
         "exception_msg": [
-            "regex1",
+            "^AttributeError\\b",
             "regex2"
         ]
     }
