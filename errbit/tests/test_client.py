@@ -82,3 +82,14 @@ class TestClient(MockerTestCase):
         self.assertEquals(
             [],
             self.http_client.posted)
+
+    def test_client_logs_invalid_config_file(self):
+        os.environ['ERRBIT_IGNORE'] = __file__
+        os.environ['ERRBIT_API_KEY'] = 'abcd1234'
+
+        client = Client()
+        client.post(EXC_INFO, request={'url': 'http://foo/bar'})
+
+        self.assertEquals(
+            2,
+            len(self.http_client.posted))
