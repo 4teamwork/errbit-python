@@ -1,6 +1,7 @@
 from errbit import httpclients
 from errbit import xmlgenerator
 from errbit.request import ThreadedRequest
+import json
 import logging
 import os
 import pkg_resources
@@ -54,6 +55,13 @@ class Client(object):
         return {'name': 'errbit',
                 'version': get_version('errbit'),
                 'url': 'https://github.com/4teamwork/errbit-python'}
+
+    def get_ignore_regex(self):
+        cfg_path = os.environ.get('ERRBIT_IGNORE')
+        if not cfg_path:
+            return []
+        cfg = json.load(open(cfg_path, 'r'))
+        return cfg['exception_msg']
 
     def get_environment(self):
         data = {'project-root': os.getcwd()}

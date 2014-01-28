@@ -26,6 +26,21 @@ Configure errbit with environment variables:
   implementation can solve different problems when communicating from private
   networks with HTTP proxies. Current implementations are: ``requests``, ``urllib``,
   ``urllib2``.
+- ``ERRBIT_IGNORE`` - path to ignore file.
+
+Ignore file
+-----------
+
+The thrown exception will be ignored and not passed to errbit if its message matches one of the regex in ``exception_msg``.
+
+.. code:: json
+
+    {
+        "exception_msg": [
+            "regex1",
+            "regex2"
+        ]
+    }
 
 
 Usage
