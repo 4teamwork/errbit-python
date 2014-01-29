@@ -1,0 +1,6 @@
+{
+    "exception_msg": [
+        "^AttributeError\\b",
+        "regex2"
+    ]
+}
