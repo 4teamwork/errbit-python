@@ -5,7 +5,8 @@ Changelog
 1.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added regex filter for exception messages.
+  [lknoepfel]
 
 
 1.1.3 (2013-09-12)
