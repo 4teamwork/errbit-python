@@ -30,17 +30,8 @@ class Client(object):
         if not self.get_api_key():
             logging.error('ERRBIT_API_KEY not configured as environment variable.')
 
-
-        exc_message = traceback.format_exception_only(exc_info[0], exc_info[1])[-1].strip('\n')
-
-        if exc_info[0] != ErrbitInvalidConfigFileException:
-            try:
-                ignore_pattern = [re.compile(pat) for pat in self.get_ignore_regex()]
-                for pat in ignore_pattern:
-                    if pat.match(exc_message):
-                        return
-            except ErrbitInvalidConfigFileException:
-                self.post(sys.exc_info())
+        if self.is_ignored(exc_info):
+            return
 
         xml = xmlgenerator.generate_xml(self.get_api_key(),
                                         self.get_notifier(),
@@ -81,6 +72,19 @@ class Client(object):
             return cfg['exception_msg']
         except Exception, exc:
             raise ErrbitInvalidConfigFileException(': '.join((exc.__class__.__name__, str(exc))))
+
+    def is_ignored(self, exc_info):
+        exc_message = traceback.format_exception_only(exc_info[0], exc_info[1])[-1].strip('\n')
+
+        if exc_info[0] != ErrbitInvalidConfigFileException:
+            try:
+                ignore_pattern = [re.compile(pat) for pat in self.get_ignore_regex()]
+                for pat in ignore_pattern:
+                    if pat.match(exc_message):
+                        return True
+            except ErrbitInvalidConfigFileException:
+                self.post(sys.exc_info())
+        return False
 
     def get_environment(self):
         data = {'project-root': os.getcwd()}
