@@ -4,6 +4,7 @@ from mocker import MockerTestCase
 import os
 import pkg_resources
 import sys
+import threading
 
 
 ERRBIT_VERSION = pkg_resources.require('errbit')[0].version
@@ -66,6 +67,9 @@ class TestClient(MockerTestCase):
 
         self.mocker.replay()
         client.post(EXC_INFO, request=request_data)
+
+        while threading.active_count() > 1:
+            pass
 
         self.assertEquals([{'data': '<XMLDATA/>', 'url': 'http://errbit.local/api'}],
                           self.http_client.posted)

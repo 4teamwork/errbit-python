@@ -27,7 +27,8 @@ class TestThreadedRequest(TestCase):
 
         req = ThreadedRequest('http://foo/bar', '<data></data>',
                               http_client=http_client)
-        req.run()  # synced call
+        req.start()
+        req.join()
 
         self.assertEquals([{'url': 'http://foo/bar',
                             'data': '<data></data>'}],
@@ -42,7 +43,8 @@ class TestThreadedRequest(TestCase):
                               log=log)
 
         with NothingRaised():
-            req.run()  # synced call
+            req.start()
+            req.join()
 
         self.assertEquals('ERROR: Failed to post to errbit: Exception: HTTP Error',
                           log.getvalue())
