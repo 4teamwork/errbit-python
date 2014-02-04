@@ -67,7 +67,6 @@ class TestClient(MockerTestCase):
 
         self.mocker.replay()
         client.post(EXC_INFO, request=request_data)
-
         while threading.active_count() > 1:
             pass
 
@@ -82,6 +81,8 @@ class TestClient(MockerTestCase):
 
         client = Client()
         client.post(EXC_INFO, request={'url': 'http://foo/bar'})
+        while threading.active_count() > 1:
+            pass
 
         self.assertEquals(
             [],
@@ -93,6 +94,8 @@ class TestClient(MockerTestCase):
 
         client = Client()
         client.post(EXC_INFO, request={'url': 'http://foo/bar'})
+        while threading.active_count() > 1:
+            pass
 
         self.assertEquals(
             2,
