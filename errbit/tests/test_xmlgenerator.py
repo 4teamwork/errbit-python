@@ -58,6 +58,11 @@ try:
 except:
     EXC_INFO = sys.exc_info()
 
+try:
+    raise Exception('')
+except:
+    EMPTY_EXC_INFO = sys.exc_info()
+
 
 NOTIFIER = {'name': 'my project',
             'url': 'http://localhost/',
@@ -83,6 +88,10 @@ class TestXMLGenerator(TestCase):
         msg = "Foo instance has no attribute 'bar'"
         doc = generate('', NOTIFIER, EXC_INFO)
         self.assertEquals(msg, doc('error message').text())
+
+    def test_message_shall_not_be_empty(self):
+        doc = generate('', NOTIFIER, EMPTY_EXC_INFO)
+        self.assertIn('<message> </message>', str(doc))
 
     def test_backtrace_in_xml(self):
         try:

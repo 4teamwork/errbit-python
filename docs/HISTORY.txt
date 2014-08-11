@@ -5,7 +5,8 @@ Changelog
 1.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix empty message syntax in XML.
+  [jone]
 
 
 1.1.4 (2014-03-18)
