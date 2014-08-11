@@ -34,7 +34,11 @@ def add_xml_error(xml, exc_info):
     exc_type, exc_value, exc_traceback = exc_info
 
     getattr(xml, 'class')(exc_type.__name__)
-    xml.message(str(exc_value))
+    message = str(exc_value)
+    if message:
+        xml.message(message)
+    else:
+        xml.message(' ')
 
     with xml.backtrace:
         for path, lineno, method, line in traceback.extract_tb(exc_traceback):
