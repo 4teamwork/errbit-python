@@ -26,7 +26,7 @@ Configure errbit with environment variables:
   implementation can solve different problems when communicating from private
   networks with HTTP proxies. Current implementations are: ``requests``, ``urllib``,
   ``urllib2``.
-- ``ERRBIT_IGNORE`` - path to ignore file.
+- ``ERRBIT_IGNORE`` - path to ignore file (default: ~/.errbit/errbit_ignore.json)
 
 Ignore file
 -----------

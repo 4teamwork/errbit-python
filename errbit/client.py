@@ -65,8 +65,11 @@ class Client(object):
                 'url': 'https://github.com/4teamwork/errbit-python'}
 
     def get_ignore_regex(self):
-        cfg_path = os.environ.get('ERRBIT_IGNORE')
-        if not cfg_path:
+        cfg_path = os.environ.get(
+            'ERRBIT_IGNORE',
+            os.path.expanduser('~/.errbit/errbit_ignore.json'))
+
+        if not os.path.isfile(cfg_path):
             return []
 
         try:
