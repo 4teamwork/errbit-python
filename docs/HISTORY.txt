@@ -5,7 +5,8 @@ Changelog
 1.1.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Make get_ignore_regex() look in a default location for the ignore file.
+  [lgraf]
 
 
 1.1.5 (2014-08-11)
