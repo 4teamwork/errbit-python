@@ -28,7 +28,8 @@ class Client(object):
             logging.error('ERRBIT_URL not configured as environment variable.')
 
         if not self.get_api_key():
-            logging.error('ERRBIT_API_KEY not configured as environment variable.')
+            logging.error('ERRBIT_API_KEY not configured as environment '
+                          'variable.')
 
         if self.is_ignored(exc_info):
             return
@@ -39,15 +40,16 @@ class Client(object):
                                         environment=self.get_environment())
 
         http_client = self.http_client()
-        req = ThreadedRequest(self.get_errbit_url(), xml, http_client=http_client)
+        req = ThreadedRequest(
+            self.get_errbit_url(), xml, http_client=http_client)
         req.start()
 
     def http_client(self):
         client_name = os.environ.get('ERRBIT_HTTP_CLIENT', 'requests')
         if client_name not in httpclients.HTTP_CLIENTS:
-            raise Exception(('ERRBIT_HTTP_CLIENT: "%s" is no valid client name. '
-                             'Valid clients are: %s') % (
-                    client_name, str(httpclients.HTTP_CLIENTS.keys())))
+            raise Exception(('ERRBIT_HTTP_CLIENT: "%s" is no valid client '
+                             'name. Valid clients are: %s') % (
+                client_name, str(httpclients.HTTP_CLIENTS.keys())))
 
         return httpclients.HTTP_CLIENTS.get(client_name)()
 
@@ -71,10 +73,12 @@ class Client(object):
             cfg = json.load(open(cfg_path, 'r'))
             return cfg['exception_msg']
         except Exception, exc:
-            raise ErrbitInvalidConfigFileException(': '.join((exc.__class__.__name__, str(exc))))
+            raise ErrbitInvalidConfigFileException(
+                ': '.join((exc.__class__.__name__, str(exc))))
 
     def is_ignored(self, exc_info):
-        exc_message = traceback.format_exception_only(exc_info[0], exc_info[1])[-1].strip('\n')
+        exc_message = traceback.format_exception_only(
+            exc_info[0], exc_info[1])[-1].strip('\n')
 
         if exc_info[0] != ErrbitInvalidConfigFileException:
             try:
