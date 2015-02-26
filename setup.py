@@ -36,9 +36,10 @@ setup(name='errbit',
       zip_safe=False,
 
       install_requires=[
+        'decorator',
+        'requests',
         'setuptools',
         'xmlbuilder',
-        'requests',
         ],
 
       tests_require=tests_require,
