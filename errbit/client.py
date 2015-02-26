@@ -1,6 +1,7 @@
 from errbit import httpclients
 from errbit import xmlgenerator
 from errbit.request import ThreadedRequest
+from pkg_resources import DistributionNotFound
 import json
 import logging
 import os
@@ -14,7 +15,10 @@ LOG = logging.getLogger('errbit')
 
 
 def get_version(package):
-    return pkg_resources.require(package)[0].version
+    try:
+        return pkg_resources.require(package)[0].version
+    except DistributionNotFound:
+        return 'unkown'
 
 
 class ErrbitInvalidConfigFileException(Exception):

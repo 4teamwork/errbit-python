@@ -1,5 +1,6 @@
 from errbit import httpclients
 from errbit.client import Client
+from errbit.client import get_version
 from mocker import MockerTestCase
 import os
 import pkg_resources
@@ -41,6 +42,10 @@ class TestClient(MockerTestCase):
         for key in filter(lambda key: key.startswith('ERRBIT_'),
                           os.environ.keys()):
             del os.environ[key]
+
+    def test_get_version(self):
+        self.assertEqual(ERRBIT_VERSION, get_version('errbit'))
+        self.assertEqual('unkown', get_version('errbitly'))
 
     def test_set_api_key_with_environment_variables(self):
         os.environ['ERRBIT_API_KEY'] = 'abcd1234'
