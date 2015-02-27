@@ -1,5 +1,6 @@
 from errbit.client import Client
 from errbit.plone.cleanup import cleanup_request_info
+from errbit.utils import logging_exceptions
 from zope.component.hooks import getSite
 import logging
 import sys
@@ -17,6 +18,10 @@ class ErrbitLoggingHandler(logging.Handler):
         if exc_info[0] is None:
             return
 
+        if getattr(exc_info[1], '_errbit_do_not_report', None):
+            # This is an exception while emitting another exception.
+            return
+
         # This is a logging handler, not an exception handler.
         # By storing the last consumed exception we can make the handler
         # only report on new exceptions.
@@ -30,6 +35,7 @@ class ErrbitLoggingHandler(logging.Handler):
         except:
             pass
 
+    @logging_exceptions
     def notify_errbit(self, exc_info):
         client = Client()
         request_info = self.get_request_info()

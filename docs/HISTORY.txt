@@ -5,6 +5,12 @@ Changelog
 1.1.6 (unreleased)
 ------------------
 
+- Post "unknown" app version when ERRBIT_PACKAGE is invalid.
+  [jone]
+
+- Log errors happening while handling errors.
+  [jone]
+
 - Make get_ignore_regex() look in a default location for the ignore file.
   [lgraf]
 
