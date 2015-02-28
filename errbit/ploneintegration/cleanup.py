@@ -1,7 +1,7 @@
 import logging
 import re
 
-LOG = logging.getLogger('errbit.plone.cleanups')
+LOG = logging.getLogger('errbit.ploneintegration.cleanups')
 
 
 CLEANUPS = []

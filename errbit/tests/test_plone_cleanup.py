@@ -1,5 +1,5 @@
-from errbit.plone.cleanup import REPLACEMENT
-from errbit.plone.cleanup import cleanup_request_info
+from errbit.ploneintegration.cleanup import cleanup_request_info
+from errbit.ploneintegration.cleanup import REPLACEMENT
 from unittest2 import TestCase
 
 

@@ -5,7 +5,7 @@
 
     <!-- enable Plone hooks -->
     <configure zcml:condition="installed Products.CMFPlone">
-        <include package="errbit.plone" />
+        <include package="errbit.ploneintegration" />
     </configure>
 
 </configure>
