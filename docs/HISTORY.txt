@@ -5,7 +5,9 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Implement JavaScript error reporting.
+  The profile "errbit-ploneintegration:default" must be installed.
+  [jone]
 
 
 1.2.1 (2015-03-02)
