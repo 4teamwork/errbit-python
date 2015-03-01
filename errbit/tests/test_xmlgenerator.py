@@ -149,6 +149,11 @@ class TestXMLGenerator(TestCase):
         doc = generate('', NOTIFIER, EXC_INFO, request=request)
         self.assertEquals({'foo': 'bar'}, vars_to_json(doc('request cgi-data var')))
 
+    def test_request_no_string_cgi_data(self):
+        request = {'cgi-data': {4028847644L: 10}}
+        doc = generate('', NOTIFIER, EXC_INFO, request=request)
+        self.assertEquals({'4028847644': '10'}, vars_to_json(doc('request cgi-data var')))
+
     def test_environment_name_in_xml(self):
         environment = {'environment-name': 'staging'}
         doc = generate('', NOTIFIER, EXC_INFO, environment=environment)

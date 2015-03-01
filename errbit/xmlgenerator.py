@@ -30,6 +30,15 @@ def generate_xml(api_key, notifier, exc_info, request=None, environment=None):
     return str(xml)
 
 
+def to_string(value):
+    if isinstance(value, unicode):
+        return value.encode('utf-8')
+    elif isinstance(value, str):
+        return value
+    else:
+        return str(value)
+
+
 def add_xml_error(xml, exc_info):
     exc_type, exc_value, exc_traceback = exc_info
 
@@ -79,4 +88,4 @@ def add_xml_dict_vars(xml, data):
                 add_xml_dict_vars(xml, value)
 
         else:
-            xml.var(str(value), key=key)
+            xml.var(to_string(value), key=to_string(key))
