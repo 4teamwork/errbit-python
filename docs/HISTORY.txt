@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.2.1 (unreleased)
+1.2.1 (2015-03-02)
 ------------------
 
 - Fix type error when having non-strings as keys in request's cgi-data.
