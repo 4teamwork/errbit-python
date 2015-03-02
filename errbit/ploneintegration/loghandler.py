@@ -1,5 +1,5 @@
 from errbit.client import Client
-from errbit.plone.cleanup import cleanup_request_info
+from errbit.ploneintegration.cleanup import cleanup_request_info
 from errbit.utils import logging_exceptions
 from zope.component.hooks import getSite
 import logging

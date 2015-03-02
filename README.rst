@@ -18,6 +18,7 @@ Configuration
 Configure errbit with environment variables:
 
 - ``ERRBIT_URL`` - the post-url to your errbit installation.
+- ``ERRBIT_APP_ID`` - your errbit app id (see URL when visiting the app).
 - ``ERRBIT_API_KEY`` - your errbit API key.
 - ``ERRBIT_PACKAGE`` - the setuptools name of your package.
 - ``ERRBIT_ENVIRONMENT`` - the name of the environment you are running, such as
@@ -88,13 +89,25 @@ nothing needs to be done for enabling it beside configuring the environment vari
 
 For testing the connection you can call the view ``errbit-make-error`` as ``Manager``.
 
+Report JavaScript errors in Plone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to report JavaScript errors, install the Generic Setup profile
+``profile-errbit.ploneintegration:default``, which registers the necessary
+JavaScript resources.
+
+For JavaScript reporting the ``ERRBIT_APP_ID`` environment variable needs to be set.
+
+Test the configuration: if ``http://localhost:8080/Plone/errbit-plone.js`` is empty
+not all enviornment variables are configured.
+
 
 Development / tests
 ===================
 
 Install the package and run the tests using buildout:
 
-.. code:: shell
+.. code:: sh
 
     git clone git@github.com:4teamwork/errbit-python.git
     cd errbit-python

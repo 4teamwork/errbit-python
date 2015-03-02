@@ -6,7 +6,9 @@ version = '1.2.2.dev0'
 
 
 tests_require = [
+    'ftw.testbrowser',
     'mocker',
+    'plone.app.testing',
     'pyquery',
     'unittest2',
     'zope.component',

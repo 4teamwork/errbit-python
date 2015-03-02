@@ -30,10 +30,12 @@ class Client(object):
     def post(self, exc_info, request=None):
         if not self.get_errbit_url():
             logging.error('ERRBIT_URL not configured as environment variable.')
+            return
 
         if not self.get_api_key():
             logging.error('ERRBIT_API_KEY not configured as environment '
                           'variable.')
+            return
 
         if self.is_ignored(exc_info):
             return

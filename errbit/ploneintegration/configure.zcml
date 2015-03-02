@@ -1,0 +1,29 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="errbit">
+
+    <browser:page
+        for="*"
+        name="errbit-make-error"
+        class=".views.MakeError"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        for="*"
+        name="errbit-plone.js"
+        class=".views.ErrbitJavaScript"
+        permission="zope.Public"
+        />
+
+    <genericsetup:registerProfile
+        name="default"
+        title="errbit.ploneintegration:default"
+        directory="profiles/default"
+        description="Install JavaScript for reporting JS errors."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+</configure>
