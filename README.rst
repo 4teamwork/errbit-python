@@ -132,7 +132,3 @@ Copyright
 This package is copyright by `4teamwork <http://www.4teamwork.ch/>`_.
 
 ``errbit-python`` is licensed under GNU General Public License, version 2.
-
-.. image:: https://cruel-carlota.pagodabox.com/2b54f90882a606963f8e0581193f51bb
-   :alt: githalytics.com
-   :target: http://githalytics.com/4teamwork/errbit-python
