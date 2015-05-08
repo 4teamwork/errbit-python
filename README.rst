@@ -120,9 +120,9 @@ Install the package and run the tests using buildout:
 Links
 -----
 
-- Main github project repository: https://github.com/4teamwork/errbit-python
-- Issue tracker: https://github.com/4teamwork/errbit-python/issues
-- Package on pypi: http://pypi.python.org/pypi/errbit-python
+- Github: https://github.com/4teamwork/errbit-python
+- Issues: https://github.com/4teamwork/errbit-python/issues
+- Pypi: http://pypi.python.org/pypi/errbit-python
 - Continuous integration: https://jenkins.4teamwork.ch/search?q=errbit-python
 
 
