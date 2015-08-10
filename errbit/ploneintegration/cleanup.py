@@ -23,8 +23,8 @@ def cleanup_request_info(request):
         try:
             request = cleanup(request)
         except Exception, exc:
-            logging.DEBUG('Failed to apply cleanup (%s): %s' % (
-                    str(cleanup), str(exc)))
+            LOG.warning('Failed to apply cleanup "%s", got %s: %s' % (
+                str(cleanup), type(exc).__name__, str(exc)))
 
     return request
 
@@ -42,6 +42,7 @@ def filter_values(data, key_expression):
             new_data[key] = value
 
     return new_data
+
 
 @cleanup
 def filter_password_from_params(request):
