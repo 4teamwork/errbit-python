@@ -12,6 +12,7 @@ tests_require = [
     'pyquery',
     'unittest2',
     'zope.component',
+    'Plone',
     ]
 
 
