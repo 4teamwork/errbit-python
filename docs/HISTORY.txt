@@ -5,7 +5,9 @@ Changelog
 1.4.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Drop official support for Python 2.6. [jone]
+
+- Drop official support for Plone 4.2. [jone]
 
 
 1.4.0 (2016-01-10)
